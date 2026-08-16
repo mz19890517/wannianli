@@ -79,9 +79,25 @@ object CalendarSync {
             putExtra(AlarmClock.EXTRA_MINUTES, minute)
             putExtra(AlarmClock.EXTRA_MESSAGE, message)
         }
-        if (intent.resolveActivity(context.packageManager) == null) return false
-        context.startActivity(intent)
-        return true
+        if (intent.resolveActivity(context.packageManager) != null) {
+            try {
+                context.startActivity(intent)
+                return true
+            } catch (e: Exception) {
+                // 某些系统闹钟的 HandleSetAlarmActivity 需要签名权限,启动失败时回退到闹钟主界面
+            }
+        }
+        return try {
+            val launcher = context.packageManager.getLaunchIntentForPackage("com.android.deskclock")
+            if (launcher != null) {
+                context.startActivity(launcher)
+                true
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            false
+        }
     }
 
     fun toast(context: Context, msg: String) {
