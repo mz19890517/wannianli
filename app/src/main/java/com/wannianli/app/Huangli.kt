@@ -1,7 +1,6 @@
 package com.wannianli.app
 
 import java.time.LocalDate
-import kotlin.math.floorMod
 
 /**
  * 简化版黄历:基于建除十二神推导宜忌,并给出冲煞信息。
@@ -52,7 +51,7 @@ object Huangli {
     fun of(date: LocalDate): Info {
         val dayBranch = CalendarLogic.sexagenaryDay(date) % 12
         val monthBranch = CalendarLogic.monthBranch(date)
-        val jc = floorMod(dayBranch - monthBranch, 12)
+        val jc = Math.floorMod(dayBranch - monthBranch, 12)
 
         val chong = CalendarLogic.ZODIACS[(dayBranch + 6) % 12]
 

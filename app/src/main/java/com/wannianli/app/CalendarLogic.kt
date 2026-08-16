@@ -5,7 +5,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
-import kotlin.math.floorMod
 
 data class LunarDate(val year: Int, val month: Int, val isLeap: Boolean, val day: Int)
 
@@ -130,7 +129,7 @@ object CalendarLogic {
 
     /** 日干支(60 甲子索引,0=甲子)。以 1949-10-01(甲子日)为基准。 */
     fun sexagenaryDay(date: LocalDate): Int =
-        floorMod(ChronoUnit.DAYS.between(LocalDate.of(1949, 10, 1), date).toInt(), 60)
+        Math.floorMod(ChronoUnit.DAYS.between(LocalDate.of(1949, 10, 1), date).toInt(), 60)
 
     /** 节气所在日。index 0=小寒,2=立春,... 23=冬至。 */
     fun solarTermDay(year: Int, index: Int): Int {
@@ -145,7 +144,7 @@ object CalendarLogic {
         if (date.monthValue == 1 ||
             (date.monthValue == 2 && date.dayOfMonth < solarTermDay(y, 2))
         ) y--
-        val idx = floorMod(y - 4, 60)
+        val idx = Math.floorMod(y - 4, 60)
         return Ganzhi(idx % 10, idx % 12)
     }
 
@@ -159,7 +158,7 @@ object CalendarLogic {
         } else {
             var b = m % 12
             val lead = solarTermDay(y, (m - 2) * 2 + 2)
-            if (d < lead) b = floorMod(b - 1, 12)
+            if (d < lead) b = Math.floorMod(b - 1, 12)
             b
         }
     }
@@ -169,12 +168,12 @@ object CalendarLogic {
         val yg = yearGanzhi(date)
         val yinStem = (yg.stem % 5) * 2 + 2
         val b = monthBranch(date)
-        return Ganzhi(floorMod(yinStem + (b - 2), 10), b)
+        return Ganzhi(Math.floorMod(yinStem + (b - 2), 10), b)
     }
 
     /** 农历年干支(以正月初一为界)。 */
     fun lunarYearGanzhi(lunarYear: Int): Ganzhi {
-        val idx = floorMod(lunarYear - 4, 60)
+        val idx = Math.floorMod(lunarYear - 4, 60)
         return Ganzhi(idx % 10, idx % 12)
     }
 
