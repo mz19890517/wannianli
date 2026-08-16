@@ -147,7 +147,10 @@ class MainActivity : AppCompatActivity() {
             pendingEvent = event
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.WRITE_CALENDAR),
+                arrayOf(
+                    android.Manifest.permission.READ_CALENDAR,
+                    android.Manifest.permission.WRITE_CALENDAR
+                ),
                 CalendarSync.REQUEST_CODE
             )
             return

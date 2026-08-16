@@ -22,7 +22,9 @@ object CalendarSync {
     const val REQUEST_CODE = 1001
 
     fun hasWritePermission(context: Context): Boolean =
-        ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR) ==
+        ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR) ==
                 PackageManager.PERMISSION_GRANTED
 
     /** 找一个可写入的系统日历,找不到返回 null。 */
@@ -31,12 +33,16 @@ object CalendarSync {
         val projection = arrayOf(Calendars._ID, Calendars.CALENDAR_DISPLAY_NAME)
         val selection = "${Calendars.CALENDAR_ACCESS_LEVEL} >= ?"
         val args = arrayOf(Calendars.CAL_ACCESS_CONTRIBUTOR.toString())
-        context.contentResolver.query(uri, projection, selection, args, null)?.use { c ->
-            if (c.moveToFirst()) return c.getLong(0)
-        }
-        // 兜底:任意日历
-        context.contentResolver.query(uri, projection, null, null, null)?.use { c ->
-            if (c.moveToFirst()) return c.getLong(0)
+        try {
+            context.contentResolver.query(uri, projection, selection, args, null)?.use { c ->
+                if (c.moveToFirst()) return c.getLong(0)
+            }
+            // 兜底:任意日历
+            context.contentResolver.query(uri, projection, null, null, null)?.use { c ->
+                if (c.moveToFirst()) return c.getLong(0)
+            }
+        } catch (e: Exception) {
+            return null
         }
         return null
     }
