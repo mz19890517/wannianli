@@ -183,6 +183,15 @@
                 android:textColor="?android:attr/textColorPrimary"
                 android:text="值神:满日  冲龙煞北" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/add_event"
+                android:textSize="14sp"
+                style="@style/Widget.Material3.Button.FilledTonalButton" />
+
         </LinearLayout>
     </ScrollView>
 

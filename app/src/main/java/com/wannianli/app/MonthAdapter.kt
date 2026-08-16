@@ -61,6 +61,19 @@ class MonthAdapter(
         fun bind(cell: Cell, onDayClick: (LocalDate) -> Unit) {
             tvDay.text = cell.dayText
             tvLunar.text = cell.subText
+
+            val rv = itemView.parent as? RecyclerView
+            if (rv != null) {
+                val rows = (cells.size / 7).coerceAtLeast(1)
+                val targetH = if (rv.height > 0) rv.height / rows
+                else itemView.resources.getDimensionPixelSize(R.dimen.day_cell_fallback_height)
+                val lp = itemView.layoutParams
+                if (lp != null && lp.height != targetH) {
+                    lp.height = targetH
+                    itemView.layoutParams = lp
+                }
+            }
+
             val date = cell.date ?: return
 
             itemView.setOnClickListener { onDayClick(date) }
