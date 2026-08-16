@@ -1,11 +1,11 @@
 package com.wannianli.app
 
 import android.Manifest
-import android.app.AlarmClock
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.provider.AlarmClock
 import android.provider.CalendarContract.Calendars
 import android.provider.CalendarContract.Events
 import android.widget.Toast

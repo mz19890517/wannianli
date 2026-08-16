@@ -51,20 +51,20 @@ class MonthAdapter(
     override fun getItemCount(): Int = cells.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.bind(cells[position], onDayClick)
+        val rows = (cells.size / 7).coerceAtLeast(1)
+        holder.bind(cells[position], rows, onDayClick)
     }
 
     class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvDay = itemView.findViewById<TextView>(R.id.tvDay)
         private val tvLunar = itemView.findViewById<TextView>(R.id.tvLunar)
 
-        fun bind(cell: Cell, onDayClick: (LocalDate) -> Unit) {
+        fun bind(cell: Cell, rows: Int, onDayClick: (LocalDate) -> Unit) {
             tvDay.text = cell.dayText
             tvLunar.text = cell.subText
 
             val rv = itemView.parent as? RecyclerView
             if (rv != null) {
-                val rows = (cells.size / 7).coerceAtLeast(1)
                 val targetH = if (rv.height > 0) rv.height / rows
                 else itemView.resources.getDimensionPixelSize(R.dimen.day_cell_fallback_height)
                 val lp = itemView.layoutParams
