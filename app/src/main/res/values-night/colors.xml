@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#EF5350</color>
+    <color name="colorPrimaryDark">#B71C1C</color>
+    <color name="day_text">#EEEEEE</color>
+    <color name="day_today_text">#FFFFFF</color>
+    <color name="lunar_text">#9E9E9E</color>
+    <color name="selected_bg">#6B3030</color>
+    <color name="ic_launcher_background">#B71C1C</color>
+</resources>
