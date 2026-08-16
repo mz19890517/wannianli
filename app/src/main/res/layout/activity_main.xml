@@ -190,7 +190,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/add_event"
                 android:textSize="14sp"
-                style="@style/Widget.Material3.Button.FilledTonalButton" />
+                style="@style/Widget.Material3.Button.TonalButton" />
 
         </LinearLayout>
     </ScrollView>
